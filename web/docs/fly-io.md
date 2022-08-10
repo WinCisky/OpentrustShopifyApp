@@ -53,7 +53,7 @@
      [env]
        BACKEND_PORT = "8081"
        HOST = "https://fancy-cloud-1234.fly.dev"
-       SCOPES = "write_products"
+       SCOPES = "read_orders"
        SHOPIFY_API_KEY = "ReplaceWithKEYFromEnvCommand"
 
      :

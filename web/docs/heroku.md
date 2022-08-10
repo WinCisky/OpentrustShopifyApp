@@ -50,7 +50,7 @@ git commit -m "Initial version"
 
    ```shell
    heroku config:set HOST=https://my-app-name.herokuapp.com
-   heroku config:set SCOPES=write_products
+   heroku config:set SCOPES=read_orders
    heroku config:set SHOPIFY_API_KEY=ReplaceWithKEYFromEnvCommand
    heroku config:set SHOPIFY_API_SECRET=ReplaceWithSECRETFromEnvCommand
    ```

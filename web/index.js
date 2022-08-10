@@ -11,9 +11,12 @@ import { setupGDPRWebHooks } from "./gdpr.js";
 import productCreator from "./helpers/product-creator.js";
 import { BillingInterval } from "./helpers/ensure-billing.js";
 import { AppInstallations } from "./app_installations.js";
+import { OrdersManagement } from "./orders_management.js";
+import {} from 'dotenv/config';
 
 const USE_ONLINE_TOKENS = false;
 const TOP_LEVEL_OAUTH_COOKIE = "shopify_top_level_oauth";
+OrdersManagement.supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? "";
 
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
 
@@ -39,6 +42,13 @@ Shopify.Webhooks.Registry.addHandler("APP_UNINSTALLED", {
   path: "/api/webhooks",
   webhookHandler: async (_topic, shop, _body) => {
     await AppInstallations.delete(shop);
+  },
+});
+
+Shopify.Webhooks.Registry.addHandler("ORDERS_PAID", {
+  path: "/api/webhooks",
+  webhookHandler: async (_topic, shop, body) => {
+    await OrdersManagement.completed(shop, body);
   },
 });
 
@@ -100,6 +110,21 @@ export async function createServer(
       billing: billingSettings,
     })
   );
+
+  app.get("/api/getShopInfo", async (req, res) => {
+    const session = await Shopify.Utils.loadCurrentSession(
+      req,
+      res,
+      app.get("use-online-tokens")
+    );
+
+    const shop = session?.shop;
+    const result = await OrdersManagement.getshop(shop);
+    if(!result || result.length <= 0)
+      res.status(200).send(result);
+
+    res.status(200).send(result ? result[0] : []);
+  });
 
   app.get("/api/products/count", async (req, res) => {
     const session = await Shopify.Utils.loadCurrentSession(

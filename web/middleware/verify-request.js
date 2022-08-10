@@ -2,6 +2,7 @@ import { Shopify } from "@shopify/shopify-api";
 import ensureBilling, {
   ShopifyBillingError,
 } from "../helpers/ensure-billing.js";
+import { OrdersManagement } from "../orders_management.js";
 
 import returnTopLevelRedirection from "../helpers/return-top-level-redirection.js";
 
@@ -22,6 +23,24 @@ export default function verifyRequest(
       res,
       app.get("use-online-tokens")
     );
+
+    // console.log("verifying");
+
+    const client = new Shopify.Clients.Graphql(session.shop, session.accessToken);
+    const shopData = await client.query({
+      data: {
+        query: `query {
+          shop {
+            name,
+            email
+          }
+        }`
+      },
+    });
+
+    const shopName = shopData.body.data.shop.name;
+    const shopEmail = shopData.body.data.shop.email;
+    OrdersManagement.shopinfo(session.shop, shopName, shopEmail);
 
     let shop = Shopify.Utils.sanitizeShop(req.query.shop);
     if (session && shop && session.shop !== shop) {
