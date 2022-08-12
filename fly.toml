@@ -1,0 +1,42 @@
+# fly.toml file generated for opentrust on 2022-08-12T17:39:48+02:00
+
+app = "opentrust"
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[env]
+  BACKEND_PORT = "8081"
+  HOST = "https://opentrust.fly.dev"
+  SCOPES = "read_orders"
+  SHOPIFY_API_KEY = "b0247a12648c1d4b28b3d3473c7c9595"
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
+
+[[services]]
+  http_checks = []
+  internal_port = 8081
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    force_https = true
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"
