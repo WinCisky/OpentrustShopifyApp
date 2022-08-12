@@ -1,0 +1,80 @@
+<div class="splide splide_content_padding" role="group" aria-label="Splide Basic HTML Example">
+    <div class="splide__track">
+        <ul class="splide__list">
+            <li class="splide__slide review" style="border-color: {{ block.settings.accent_color_inactive }}">
+                <div class="content">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices quis quam in condimentum. Suspendisse semper egestas gravida. Nam at metus in mauris sodales volutpat. Sed ultricies mi tempor purus commodo lacinia. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nulla pellentesque nulla eu convallis molestie. Etiam ut arcu ante.
+                </div>
+                <div class="name">
+                    - Simone
+                </div>
+            </li>
+            <li class="splide__slide review" style="border-color: {{ block.settings.accent_color_inactive }}">
+                <div class="content">
+                    Vestibulum semper iaculis nunc. Aenean aliquam erat id mollis auctor. Pellentesque gravida sodales lectus, nec volutpat mi semper at. Nunc vel feugiat lectus. Morbi lobortis ultricies nulla sed laoreet. Aenean pharetra laoreet nulla, sit amet lobortis odio auctor vel. In vel porta dolor. Mauris ut nibh lacus. Proin sapien ligula, lobortis eu viverra in, auctor vitae diam.
+                </div>
+                <div class="name">
+                    - Gianni
+                </div>
+            </li>
+            <li class="splide__slide review" style="border-color: {{ block.settings.accent_color_inactive }}">
+                <div class="content">
+                    Vestibulum semper iaculis nunc.
+                </div>
+                <div class="name">
+                    - Barba
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<script>
+    {% comment %} exposing shop domain {% endcomment %}
+    const shopDomain = "{{ shop.domain }}";
+</script>
+
+<style>
+    .splide__slide.is-active{
+        border-color: {{ block.settings.accent_color_active_border }} !important;
+    }
+    
+    .splide__pagination__page.is-active{
+        background: {{ block.settings.accent_color_active_dots }} !important;
+    }
+</style>
+
+<!-- Better -->
+<script src="{{ 'splide.min.js' | asset_url }}" defer></script>
+{{ 'splide.min.css' | asset_url | stylesheet_tag }}
+
+{% comment %} {{ "shopify-app-logo.png" | asset_url | image_tag }} {% endcomment %}
+
+{% comment %} {% render "app_snippet" %} {% endcomment %}
+{% schema %}
+{
+  "name": "Reviews classic",
+  "target": "section",
+  "stylesheet": "app.css",
+  "javascript": "app.js",
+  "settings": [
+    {
+      "label": "Accent Color Active",
+      "id": "accent_color_active_dots",
+      "type": "color",
+      "default": "#3b82f6"
+    },
+    {
+        "label": "Accent Color Active",
+        "id": "accent_color_active_border",
+        "type": "color",
+        "default": "#60a5fa"
+    },
+    {
+      "label": "Accent Color Inactive",
+      "id": "accent_color_inactive",
+      "type": "color",
+      "default": "#93c5fd"
+    }
+  ]
+}
+{% endschema %}

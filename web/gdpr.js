@@ -29,6 +29,9 @@ export function setupGDPRWebHooks(path) {
       //     "id": 9999
       //   }
       // }
+
+      // TODO: return all orders of user
+      // TODO: return all reviews of user
     },
   });
 
@@ -57,6 +60,9 @@ export function setupGDPRWebHooks(path) {
       //     220458
       //   ]
       // }
+
+      // TODO: change all orders with customer email to bogus email
+      // TODO: change name in all reviews to bogus name or Anon
     },
   });
 
@@ -75,6 +81,10 @@ export function setupGDPRWebHooks(path) {
       //   "shop_id": 954889,
       //   "shop_domain": "{shop}.myshopify.com"
       // }
+
+      // TODO: delete shop info
+      // TODO: delete all reviews of shop
+      // TODO: delete all orders of shop
     },
   });
 }
