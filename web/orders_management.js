@@ -10,8 +10,12 @@ export const OrdersManagement = {
         if (!email) // error!
             return false;
 
-        const id = parsedData.id;
-        if (!id) // error!
+        const customer_locale = parsedData.customer_locale;
+        if (!customer_locale) // error!
+            return false;
+
+        const first_name = parsedData.billing_address.first_name;
+        if (!first_name) // error!
             return false;
 
         const supabase = createClient(this.supabaseUrl, this.supabaseKey);
@@ -22,7 +26,8 @@ export const OrdersManagement = {
                 {
                     email: email,
                     shop: shopDomain,
-                    order_id: id
+                    customer_locale: customer_locale,
+                    name: first_name
                 },
             ]);
 

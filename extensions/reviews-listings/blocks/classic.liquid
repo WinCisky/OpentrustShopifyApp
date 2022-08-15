@@ -1,28 +1,55 @@
 <div class="splide splide_content_padding" role="group" aria-label="Splide Basic HTML Example">
     <div class="splide__track">
-        <ul class="splide__list">
+        <ul class="splide__list" id="reviewsList">
             <li class="splide__slide review" style="border-color: {{ block.settings.accent_color_inactive }}">
+                <div class="stars">
+                    <span>&#9733;</span>
+                    <span>&#9733;</span>
+                    <span>&#9733;</span>
+                    <span>&#9733;</span>
+                    <span>&#9733;</span>
+                </div>
                 <div class="content">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices quis quam in condimentum. Suspendisse semper egestas gravida. Nam at metus in mauris sodales volutpat. Sed ultricies mi tempor purus commodo lacinia. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nulla pellentesque nulla eu convallis molestie. Etiam ut arcu ante.
+                    Awesome products, reccomended!
                 </div>
                 <div class="name">
-                    - Simone
+                    Simone
+                </div>
+                <div class="time">
+                    1 day ago
                 </div>
             </li>
             <li class="splide__slide review" style="border-color: {{ block.settings.accent_color_inactive }}">
+                <div class="stars">
+                    <span>&#9733;</span>
+                    <span>&#9733;</span>
+                    <span>&#9733;</span>
+                    <span>&#9733;</span>
+                    <span>&#9733;</span>
+                </div>
                 <div class="content">
-                    Vestibulum semper iaculis nunc. Aenean aliquam erat id mollis auctor. Pellentesque gravida sodales lectus, nec volutpat mi semper at. Nunc vel feugiat lectus. Morbi lobortis ultricies nulla sed laoreet. Aenean pharetra laoreet nulla, sit amet lobortis odio auctor vel. In vel porta dolor. Mauris ut nibh lacus. Proin sapien ligula, lobortis eu viverra in, auctor vitae diam.
+                    The shipment was really fast, will definitely order again.
                 </div>
                 <div class="name">
-                    - Gianni
+                    Gianni
+                </div>
+                <div class="time">
+                    2 days ago
                 </div>
             </li>
             <li class="splide__slide review" style="border-color: {{ block.settings.accent_color_inactive }}">
+                <div class="stars">
+                    <span>&#9733;</span>
+                    <span>&#9733;</span>
+                    <span>&#9733;</span>
+                    <span>&#9733;</span>
+                    <span>&#9733;</span>
+                </div>
                 <div class="content">
                     Vestibulum semper iaculis nunc.
                 </div>
-                <div class="name">
-                    - Barba
+                <div class="time">
+                    3 days ago
                 </div>
             </li>
         </ul>
@@ -41,6 +68,10 @@
     .splide__pagination__page.is-active{
         background: {{ block.settings.accent_color_active_dots }} !important;
     }
+
+    .splide__slide .stars .active {
+        color: {{ block.settings.accent_color_active_border }} !important;
+    }
 </style>
 
 <!-- Better -->
@@ -58,22 +89,22 @@
   "javascript": "app.js",
   "settings": [
     {
-      "label": "Accent Color Active",
+      "label": "Accent Color Active Dots",
       "id": "accent_color_active_dots",
       "type": "color",
-      "default": "#3b82f6"
+      "default": "#F5F5F5"
     },
     {
-        "label": "Accent Color Active",
+        "label": "Accent Color Active Border",
         "id": "accent_color_active_border",
         "type": "color",
-        "default": "#60a5fa"
+        "default": "#2196F3 "
     },
     {
       "label": "Accent Color Inactive",
       "id": "accent_color_inactive",
       "type": "color",
-      "default": "#93c5fd"
+      "default": "#E1E3E4"
     }
   ]
 }

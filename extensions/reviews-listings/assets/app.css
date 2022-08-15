@@ -1,29 +1,39 @@
-.splide_content_padding{
+.splide_content_padding {
     padding: 3.5rem;
 }
 
-.splide__slide.review{
-    border-radius: 10px;
+.splide__slide.review {
+    border-radius: 0.5rem;
     border: 2px solid;
     padding: 20px;
     display: flex;
     flex-direction: column;
     cursor: pointer;
+    min-height: 200px;
 }
 
-.splide__slide .content{
+.splide__slide .content {
     flex: 1;
     overflow: hidden;
     -webkit-box-orient: vertical;
     display: block;
     display: -webkit-box;
-    overflow: hidden !important;
+    overflow: hidden;
     text-overflow: ellipsis;
     -webkit-line-clamp: 8;
 }
 
-.splide__slide .name{
+.splide__slide .name {
     display: flex;
-    justify-content: flex-end;
+    /* justify-content: flex-end; */
     font-weight: 500;
+}
+
+.splide__slide .time {
+    font-size: small;
+}
+
+.splide__slide .stars {
+    font-size: large;
+    color: #f5f5f5;
 }
