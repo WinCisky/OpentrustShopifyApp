@@ -126,6 +126,27 @@ export async function createServer(
     res.status(200).send(result ? result[0] : []);
   });
 
+  app.get("/api/getTest", async (req, res) => {
+    const session = await Shopify.Utils.loadCurrentSession(
+      req,
+      res,
+      app.get("use-online-tokens")
+    );
+
+    Shopify.Webhooks.Registry.addHandler("ORDERS_PAID", {
+      path: "/api/webhooks",
+      webhookHandler: async (_topic, shop, body) => {
+        await OrdersManagement.completed(shop, body);
+      },
+    });
+
+    const test = Shopify.Webhooks.Registry.getHandler("ORDERS_PAID");
+    if(!test)
+      res.status(200).send("");
+
+    res.status(200).send(test);
+  });
+
   app.get("/api/products/count", async (req, res) => {
     const session = await Shopify.Utils.loadCurrentSession(
       req,

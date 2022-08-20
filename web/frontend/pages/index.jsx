@@ -21,6 +21,7 @@ import { ProductsCard, HelloCard } from "../components";
 export default function HomePage() {
 
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingTest, setIsLoadingTest] = useState(true);
 
     const { data } = useAppQuery({
         url: "/api/getShopInfo",
@@ -30,6 +31,15 @@ export default function HomePage() {
             },
         },
     });
+
+    const { test } = useAppQuery({
+      url: "/api/getTest",
+      reactQueryOptions: {
+          onSuccess: (test) => {
+              setIsLoadingTest(false);
+          },
+      },
+  });
 
   return (
     <Page narrowWidth>
@@ -61,6 +71,10 @@ export default function HomePage() {
                   <Subheading>shop email</Subheading>
                   <TextContainer spacing="loose">
                     <p>{isLoading ? "-" : data.email}</p>
+                  </TextContainer>
+                  <Subheading>webhook status</Subheading>
+                  <TextContainer spacing="loose">
+                    <p>{isLoadingTest ? "-" : test}</p>
                   </TextContainer>
 
                 </TextContainer>
