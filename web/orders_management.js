@@ -6,16 +6,20 @@ export const OrdersManagement = {
     completed: async function (shopDomain, orderData) {
 
         const parsedData = JSON.parse(orderData);
+        // console.log(JSON.stringify(parsedData));
         const email = parsedData.email;
         if (!email) // error!
             return false;
 
-        const customer_locale = parsedData.customer_locale;
+        // just it or en, ...
+        const customer_locale = parsedData.customer_locale.substring(0,2);
         if (!customer_locale) // error!
             return false;
 
         const first_name = parsedData.billing_address.first_name;
-        if (!first_name) // error!
+        const last_name = parsedData.billing_address.last_name;
+        const name = first_name ? first_name : last_name;
+        if (!name) // error!
             return false;
 
         const supabase = createClient(this.supabaseUrl, this.supabaseKey);
@@ -27,7 +31,7 @@ export const OrdersManagement = {
                     email: email,
                     shop: shopDomain,
                     customer_locale: customer_locale,
-                    name: first_name
+                    name: name
                 },
             ]);
 

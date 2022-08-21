@@ -21,7 +21,7 @@ import { ProductsCard, HelloCard } from "../components";
 export default function HomePage() {
 
   const [isLoading, setIsLoading] = useState(true);
-  const [isLoadingTest, setIsLoadingTest] = useState(true);
+  const [topics, setTopics] = useState("-");
 
     const { data } = useAppQuery({
         url: "/api/getShopInfo",
@@ -32,11 +32,12 @@ export default function HomePage() {
         },
     });
 
-    const { test } = useAppQuery({
+    useAppQuery({
       url: "/api/getTest",
       reactQueryOptions: {
-          onSuccess: (test) => {
-              setIsLoadingTest(false);
+          onSuccess: (data) => {
+              console.log(data.topics);
+              setTopics(data.topics);
           },
       },
   });
@@ -72,9 +73,9 @@ export default function HomePage() {
                   <TextContainer spacing="loose">
                     <p>{isLoading ? "-" : data.email}</p>
                   </TextContainer>
-                  <Subheading>webhook status</Subheading>
+                  <Subheading>webhooks</Subheading>
                   <TextContainer spacing="loose">
-                    <p>{isLoadingTest ? "-" : test}</p>
+                    <p>{topics.split('\n').map(str => <p>{str}</p>)}</p>
                   </TextContainer>
 
                 </TextContainer>

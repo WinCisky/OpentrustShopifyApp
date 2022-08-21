@@ -133,18 +133,26 @@ export async function createServer(
       app.get("use-online-tokens")
     );
 
-    Shopify.Webhooks.Registry.addHandler("ORDERS_PAID", {
-      path: "/api/webhooks",
-      webhookHandler: async (_topic, shop, body) => {
-        await OrdersManagement.completed(shop, body);
-      },
-    });
+    const { Webhook } = await import(
+        `@shopify/shopify-api/dist/rest-resources/${Shopify.Context.API_VERSION}/index.js`
+    );
 
-    const test = Shopify.Webhooks.Registry.getHandler("ORDERS_PAID");
-    if(!test)
-      res.status(200).send("");
+    try{
+        const my_webhooks = await Webhook.all({
+            session: session,
+        });
 
-    res.status(200).send(test);
+        let topics = "";
+
+        my_webhooks.forEach(element => {
+            topics += `Topic: ${element.topic} Address: ${element.address} \n`;
+        });
+
+        res.status(200).send({"topics" : topics});
+    } catch (error)
+    {
+        res.status(200).send({"error: " : error});
+    }
   });
 
   app.get("/api/products/count", async (req, res) => {
