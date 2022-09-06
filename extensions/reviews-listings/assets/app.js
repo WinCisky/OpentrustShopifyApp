@@ -53,7 +53,28 @@ async function loadData() {
         )
         let result = "";
         const responseData = await response.json();
-        responseData.forEach(review => {
+        let mockData = [
+            {
+                "score" : 5, 
+                "description" : "Awesome products, reccomended!", 
+                "name" : "Simone",
+                "created_at" : new Date(Date.now() - 10800000) //3h
+            },
+            {
+                "score" : 4, 
+                "description" : "The shipment was really fast, will definitely order again.", 
+                "name" : "Gianni",
+                "created_at" : new Date(Date.now() - (86400000 * 2)) //2d
+            },
+            {
+                "score" : 5, 
+                "description" : "Vestibulum semper iaculis nunc.", 
+                "name" : "Kate",
+                "created_at" : new Date(Date.now() - (86400000 * 3)) //3d
+            },
+        ];
+        let data = responseData.length > 0 ? responseData : mockData;
+        data.forEach(review => {
             let stars = "";
             for (let i = 0; i < 5; i++) {
                 stars += `<span${(review.score - 1) >= i ? " class='active'" : ""}>&#9733;</span>`
@@ -75,7 +96,8 @@ async function loadData() {
             </li>
             `;
         });
-        document.getElementById("reviewsList").innerHTML = result;
+        if(result)
+            document.getElementById("reviewsList").innerHTML = result;
         return true;
     }
     return false;
