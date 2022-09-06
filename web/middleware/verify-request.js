@@ -24,25 +24,30 @@ export default function verifyRequest(
       app.get("use-online-tokens")
     );
 
-    // console.log("verifying");
-
-    const client = new Shopify.Clients.Graphql(session.shop, session.accessToken);
-    const shopData = await client.query({
-      data: {
-        query: `query {
-          shop {
-            name,
-            email
-          }
-        }`
-      },
-    });
-
-    const shopName = shopData.body.data.shop.name;
-    const shopEmail = shopData.body.data.shop.email;
-    OrdersManagement.shopinfo(session.shop, shopName, shopEmail);
-
+    console.log("verifying");
     let shop = Shopify.Utils.sanitizeShop(req.query.shop);
+    if(session && session.shop && session.accessToken) {
+        console.log("session shop and access token" + session.shop);
+
+        const client = new Shopify.Clients.Graphql(session.shop, session.accessToken);
+        const shopData = await client.query({
+        data: {
+            query: `query {
+            shop {
+                name,
+                email
+            }
+            }`
+        },
+        });
+
+        const shopName = shopData.body.data.shop.name;
+        const shopEmail = shopData.body.data.shop.email;
+        OrdersManagement.shopinfo(session.shop, shopName, shopEmail);
+
+    }
+
+    
     if (session && shop && session.shop !== shop) {
       // The current request is for a different shop. Redirect gracefully.
       return res.redirect(`/api/auth?shop=${encodeURIComponent(shop)}`);

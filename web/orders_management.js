@@ -49,16 +49,20 @@ export const OrdersManagement = {
         if (!shopEmail)
             return false;
 
-        {
-            // check if default data was already saved
-            let { data, error } = await supabase
-                .from('stores')
-                .select('*')
-                .eq(shop, shop)
+        console.log(shopName + " " + shopEmail);
 
-            if (error || (data?.length > 0 && !modified))
-                return;
-        }
+        // {
+        //     // check if default data was already saved
+        //     let { data, error } = await supabase
+        //         .from('stores')
+        //         .select('*')
+        //         .eq(shop, shop)
+
+        //     if (error || (data?.length > 0 && !modified))
+        //         return;
+        // }
+
+        console.log("passed");
 
         let { data, error } = await supabase
             .from('stores')
