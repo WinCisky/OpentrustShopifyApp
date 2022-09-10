@@ -145,7 +145,7 @@ export async function createServer(
         let topics = "";
 
         my_webhooks.forEach(element => {
-            topics += `Topic: ${element.topic} Address: ${element.address} \n`;
+            topics += `${element.topic}\n`;
         });
 
         res.status(200).send({"topics" : topics});

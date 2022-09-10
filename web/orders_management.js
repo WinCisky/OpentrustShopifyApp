@@ -83,8 +83,25 @@ export const OrdersManagement = {
         // check if default data was already saved
         let { data, error } = await supabase
         .from('stores')
-        .select('name, email')
+        .select('*')
         .eq("shop", shop)
+
+        if(!error)
+            return data;
+        return [];
+    },
+    updateshop: async function(shop, name, email, url) {
+        const supabase = createClient(this.supabaseUrl, this.supabaseKey);
+
+        const { data, error } = await supabase
+        .from('stores')
+        .update({ shown_name: name, shown_email : email, shown_url: url })
+        .eq('shop', shop)
+
+        if(error)
+            console.log(error.message);
+        else
+            console.log(JSON.stringify(data));
 
         if(!error)
             return data;

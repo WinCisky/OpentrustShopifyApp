@@ -1,5 +1,6 @@
 # Dependency directory
 node_modules
+.env
 
 # Ignore Apple macOS Desktop Services Store
 .DS_Store
