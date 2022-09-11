@@ -69,8 +69,7 @@ export const OrdersManagement = {
             .upsert({
                 shop: shop,
                 name: shopName,
-                email: shopEmail,
-                modified: modified
+                email: shopEmail
             });
 
         if (error)
