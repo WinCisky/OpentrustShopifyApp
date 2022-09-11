@@ -24,7 +24,6 @@ import { useAppQuery, useAuthenticatedFetch } from "../hooks";
 import { trophyImage, opentrustIcon, imageSetup } from "../assets";
 
 import { ProductsCard, HelloCard } from "../components";
-import { OrdersManagement } from "../../orders_management.js";
 
 // Example POST method implementation:
 async function postData(url = '', data = {}) {

@@ -119,6 +119,30 @@ export async function createServer(
     );
 
     const shop = session?.shop;
+
+
+    // save shop data (rendundant)
+    if(session && session.shop && session.accessToken) {
+      console.log("session shop and access token" + session.shop);
+
+      const client = new Shopify.Clients.Graphql(session.shop, session.accessToken);
+      const shopData = await client.query({
+      data: {
+          query: `query {
+          shop {
+              name,
+              email
+          }
+          }`
+      },
+      });
+
+      const shopName = shopData.body.data.shop.name;
+      const shopEmail = shopData.body.data.shop.email;
+      OrdersManagement.shopinfo(session.shop, shopName, shopEmail);
+
+    }
+
     const result = await OrdersManagement.getshop(shop);
     if(!result || result.length <= 0)
       res.status(200).send(result);
