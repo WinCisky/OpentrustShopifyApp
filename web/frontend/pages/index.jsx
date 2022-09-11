@@ -84,7 +84,7 @@ export default function HomePage() {
                 setShop(data.shop);
                 setName(data.shown_name ?? data.name);
                 setEmail(data.shown_email ?? data.email);
-                setUrl(data.shown_url ?? data.shop);
+                setUrl(data.shown_shop ?? data.shop);
                 setDismissed(data.dismissed ?? true);
                 console.log(JSON.stringify(data));
                 setIsLoading(false);
