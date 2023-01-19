@@ -1,0 +1,38 @@
+name: pg-dump
+on:
+  schedule:
+    - cron: '30 12 * * 1' #At 12:30 on Monday.
+  workflow_dispatch:
+    branches:
+      - main
+jobs:
+  db-backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Update
+        run: |
+          pg_dump -V
+          sudo apt-get --purge remove postgresql postgresql-*
+          # Create the file repository configuration:
+          sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+          # Import the repository signing key:
+          wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+          # Update the package lists:
+          sudo apt-get update
+          # Install the latest version of PostgreSQL.
+          # If you want a specific version, use 'postgresql-12' or similar instead of 'postgresql':
+          sudo apt-get -y install postgresql
+          pg_dump -V
+      - name: Dump
+        run: pg_dump -d postgres://postgres:${{ secrets.DB_PASSWORD }}@db.gjclmptpvaepykpghadl.supabase.co:5432/postgres -N auth -N realtime -N supabase_functions -Fc > backup-${{ steps.date.outputs.date }}.sql
+      - name: Zip
+        run: zip -r backup-${{ steps.date.outputs.date }}.zip backup-${{ steps.date.outputs.date }}.sql
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v3
+        with:
+          name: db-backup-${{ steps.date.outputs.date }}
+          path: backup-${{ steps.date.outputs.date }}.zip
+          retention-days: 90
