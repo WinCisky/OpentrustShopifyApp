@@ -16,11 +16,15 @@ export const OrdersManagement = {
         if (!customer_locale) // error!
             return false;
 
+        console.log(customer_locale);
+
         const first_name = parsedData.billing_address.first_name;
         const last_name = parsedData.billing_address.last_name;
         const name = first_name ? first_name : last_name;
         if (!name) // error!
             return false;
+
+        console.log(name);
 
         const supabase = createClient(this.supabaseUrl, this.supabaseKey);
 
@@ -34,6 +38,8 @@ export const OrdersManagement = {
                     name: name
                 },
             ]);
+
+        console.log(error);
 
         if (error)
             return false;
