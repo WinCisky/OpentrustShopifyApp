@@ -16,15 +16,12 @@ export const OrdersManagement = {
         if (!customer_locale) // error!
             return false;
 
-        console.log(customer_locale);
-
-        const first_name = parsedData.billing_address.first_name;
-        const last_name = parsedData.billing_address.last_name;
-        const name = first_name ? first_name : last_name;
-        if (!name) // error!
-            return false;
-
-        console.log(name);
+        let name = '';
+        if (parsedData && parsedData.billing_address && parsedData.billing_address.first_name) {
+            name = parsedData.billing_address.first_name;
+        } else if (parsedData && parsedData.billing_address && parsedData.billing_address.last_name) {
+            name = parsedData.billing_address.last_name;
+        }
 
         const supabase = createClient(this.supabaseUrl, this.supabaseKey);
 
